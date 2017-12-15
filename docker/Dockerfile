@@ -70,7 +70,6 @@ RUN \
   curl -fsL "https://d3kbcqa49mib13.cloudfront.net/spark-${SPARK_VERSION}-bin-hadoop2.7.tgz" | tar xfz - -C ${INSTALL_DIR} && \
   cd ${INSTALL_DIR} &&  rm -f spark && ln -s spark-${SPARK_VERSION}-bin-hadoop2.7  spark
 
-ENV APACHE_SPARK_VERSION=${SPARK_VERSION}
 
 ## cleanup apt
 RUN apt-get clean && \
