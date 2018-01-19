@@ -3,7 +3,7 @@ FROM jupyter/pyspark-notebook@sha256:64420e4c348ab48fb806f42332109cbc205ae74cda6
 ## or latest
 #FROM jupyter/pyspark-notebook@latest
 
-MAINTAINER Intel BigDL Project <bigdl@intel.com>
+MAINTAINER Elephant Scale <info@elephantscale.com>
 
 ## --- CONFIG
 ARG MAVEN_VERSION=3.5.2
@@ -70,7 +70,6 @@ RUN \
   curl -fsL "https://d3kbcqa49mib13.cloudfront.net/spark-${SPARK_VERSION}-bin-hadoop2.7.tgz" | tar xfz - -C ${INSTALL_DIR} && \
   cd ${INSTALL_DIR} &&  rm -f spark && ln -s spark-${SPARK_VERSION}-bin-hadoop2.7  spark
 
-ENV APACHE_SPARK_VERSION=${SPARK_VERSION}
 
 ## cleanup apt
 RUN apt-get clean && \
@@ -102,10 +101,10 @@ USER $NB_USER
 RUN  conda  install -y  nltk
 
 ## python 3.5 env
-RUN conda create -y -n py35 python=3.5 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk tensorflow
+RUN conda create -y -n py35 python=3.5 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk tensorflow opencv pillow
 
 ## python 2.7 env
-RUN conda create -y -n py27 python=2.7 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk tensorflow
+RUN conda create -y -n py27 python=2.7 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk tensorflow opencv pillow
 
 # list envs
 RUN conda info -e
