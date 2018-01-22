@@ -1,0 +1,6 @@
+.ipynb_checkpoints/
+
+*.log
+*.zip
+.DS_Store
+*spark-warehouse*
