@@ -1,5 +1,5 @@
 ## pick a specific version, to ensure predictability
-FROM jupyter/pyspark-notebook@sha256:7afe62876ec622b56f707d3adcafae4fd8b29e3b78863211091724b8a902837f
+FROM jupyter/pyspark-notebook@sha256:f5f1b391d3f6e94ae864690db1c5e0e9ffecf2f4a0a00f09c01c3e3a9230638e
 ## or latest
 #FROM jupyter/pyspark-notebook:latest
 
@@ -96,17 +96,15 @@ RUN mkdir /work
 USER $NB_USER
 
 ## update conda
-RUN conda update --all
+#RUN conda update --all
 ## install NLTK
 RUN  conda  install -y  nltk
 
 ## python 3.5 env
 RUN conda create -y -n py35 python=3.5 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk opencv pillow tensorflow
-#tensorflow-tensorboard
 
 ## python 2.7 env
 RUN conda create -y -n py27 python=2.7 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk opencv pillow tensorflow
-# tensorflow-tensorboard
 
 # list envs
 RUN conda info -e
