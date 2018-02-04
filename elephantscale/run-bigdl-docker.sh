@@ -3,7 +3,7 @@
 ## Usage
 #  ./run-bigdl-docker.sh   <image name>  [optional command]
 #
-#  ./run-bigdl-docker.sh  intel/bigdl
+#  ./run-bigdl-docker.sh  elephantscale/bigdl-sandbox
 #
 #  or during developing, give a local docker image id
 #  ./run-bigdl-docker.sh  abcd1234
