@@ -29,7 +29,7 @@ echo "### PYSPARK_PYTHON=$PYSPARK_PYTHON"
 echo "### PYSPARK_DRIVER_PYTHON=$PYSPARK_DRIVER_PYTHON"
 # this starts the notebook without a security token
 #export PYSPARK_DRIVER_PYTHON_OPTS="notebook --notebook-dir=./ --ip=* --no-browser --NotebookApp.token=''"
-export PYSPARK_DRIVER_PYTHON_OPTS="notebook --notebook-dir=./ --ip=* --no-browser"
+export PYSPARK_DRIVER_PYTHON_OPTS="notebook --notebook-dir=./ --ip=0.0.0.0 --no-browser"
 export BIGDL_JAR_NAME=`ls ${BIGDL_HOME}/lib/ | grep jar-with-dependencies.jar`
 export BIGDL_JAR="${BIGDL_HOME}/lib/$BIGDL_JAR_NAME"
 export BIGDL_PY_ZIP_NAME=`ls ${BIGDL_HOME}/lib/ | grep python-api.zip`
