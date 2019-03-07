@@ -6,12 +6,15 @@ FROM jupyter/pyspark-notebook@sha256:64420e4c348ab48fb806f42332109cbc205ae74cda6
 MAINTAINER Elephant Scale <info@elephantscale.com>
 
 ## --- CONFIG
-ARG MAVEN_VERSION=3.5.2
+ARG MAVEN_VERSION=3.5.4
 ARG SCALA_VERSION=2.11.8
 ARG SPARK_VERSION=2.2.0
 ARG SBT_VERSION=1.0.2
 ARG INSTALL_DIR=/usr/local
 ENV BIGDL_HOME  ${INSTALL_DIR}/BigDL
+# proxy for your network
+#ENV http_proxy 'http://proxy-address:port'
+#ENV https_proxy 'https://proxy-adrress:port'
 
 #ARG BIGDL_URL=https://s3.amazonaws.com/elephantscale-public/BigDL/BigDL.zip
 ## Download BigDL from release page
@@ -44,7 +47,6 @@ RUN cd ${INSTALL_DIR} && rm -f maven && ln -s apache-maven-${MAVEN_VERSION}  mav
 ENV MAVEN_HOME ${INSTALL_DIR}/maven
 ENV PATH=$MAVEN_HOME/bin:$PATH
 
-
 ## Scala expects this file
 RUN touch /usr/lib/jvm/java-8-openjdk-amd64/release
 
@@ -70,7 +72,6 @@ RUN \
   curl -fsL "https://d3kbcqa49mib13.cloudfront.net/spark-${SPARK_VERSION}-bin-hadoop2.7.tgz" | tar xfz - -C ${INSTALL_DIR} && \
   cd ${INSTALL_DIR} &&  rm -f spark && ln -s spark-${SPARK_VERSION}-bin-hadoop2.7  spark
 
-
 ## cleanup apt
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -90,7 +91,6 @@ ENV PATH=${INSTALL_DIR}/spark/bin:$PATH
 
 # this is where volumes will be mounted
 RUN mkdir /work
-
 
 ### now as a regular user
 USER $NB_USER
@@ -138,7 +138,6 @@ USER root
 RUN mv /usr/local/bin/start-notebook.sh   /usr/local/bin/start-notebook-old.sh
 COPY  start-notebook.sh  /usr/local/bin/
 RUN chmod +x /usr/local/bin/start-notebook.sh
-
 
 ## finally switch back to jovyan to avoid accidental container runs as root
 USER $NB_USER

@@ -32,5 +32,7 @@ docker run -it  --name "$name" \
     -p 8888:8888 \
     -p 6006:6006 \
     -v"$mydir:/work" \
+    --net host \
+    -p 6543:6543 \
     "$image_id" \
     ${cmd}
