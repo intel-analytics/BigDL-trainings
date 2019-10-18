@@ -3,7 +3,7 @@
 ## Usage
 #  ./run-bigdl-docker.sh   <image name>  [optional command]
 #
-#  ./run-bigdl-docker.sh  xxx/yyy
+#  ./run-bigdl-docker.sh  elephantscale/bigdl-sandbox
 #
 #  or during developing, give a local docker image id
 #  ./run-bigdl-docker.sh  abcd1234
@@ -19,16 +19,12 @@ fi
 
 image_id="$1"
 cmd="$2"
-name="bigdl"
-
-## remove any previously running containers
-docker rm -f "$name"
 
 # mount the current directory at /work
 this="${BASH_SOURCE-$0}"
 mydir=$(cd -P -- "$(dirname -- "$this")" && pwd -P)
 
-docker run -it  --name "$name" \
+docker run -it   \
     -p 8888:8888 \
     -p 6006:6006 \
     -v"$mydir:/work" \

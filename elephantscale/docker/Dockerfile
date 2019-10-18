@@ -1,7 +1,7 @@
 ## pick a specific version, to ensure predictability
-FROM jupyter/pyspark-notebook@sha256:64420e4c348ab48fb806f42332109cbc205ae74cda67240c3e0974c5f7e6e969
+FROM jupyter/pyspark-notebook@sha256:f5f1b391d3f6e94ae864690db1c5e0e9ffecf2f4a0a00f09c01c3e3a9230638e
 ## or latest
-#FROM jupyter/pyspark-notebook@latest
+#FROM jupyter/pyspark-notebook:latest
 
 MAINTAINER Elephant Scale <info@elephantscale.com>
 
@@ -16,10 +16,9 @@ ENV BIGDL_HOME  ${INSTALL_DIR}/BigDL
 #ENV http_proxy 'http://proxy-address:port'
 #ENV https_proxy 'https://proxy-adrress:port'
 
-#ARG BIGDL_URL=https://s3.amazonaws.com/elephantscale-public/BigDL/BigDL.zip
 ## Download BigDL from release page
-## https://bigdl-project.github.io/0.3.0/#release-download/
-ARG BIGDL_URL=https://repo1.maven.org/maven2/com/intel/analytics/bigdl/dist-spark-${SPARK_VERSION}-scala-2.11.8-linux64/0.3.0/dist-spark-${SPARK_VERSION}-scala-2.11.8-linux64-0.3.0-dist.zip
+## https://repo1.maven.org/maven2/com/intel/analytics/bigdl/
+ARG BIGDL_URL=https://repo1.maven.org/maven2/com/intel/analytics/bigdl/dist-spark-2.2.0-scala-2.11.8-all/0.4.0/dist-spark-2.2.0-scala-2.11.8-all-0.4.0-dist.zip
 ## --- end CONFIG
 
 USER root
@@ -33,7 +32,7 @@ RUN apt-get install -yq  --no-install-recommends \
     atop \
     curl \
     less \
-    openjdk-8-jdk-headless \
+    openjdk-8-jdk \
     rsync \
     unzip \
     wget \
@@ -77,6 +76,7 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 ## ----- install BigDL
+RUN echo "BIGDL_URL=$BIGDL_URL"
 RUN \
     mkdir -p ${BIGDL_HOME} && \
     cd ${BIGDL_HOME} && \
@@ -96,15 +96,15 @@ RUN mkdir /work
 USER $NB_USER
 
 ## update conda
-# RUN conda update --all
+#RUN conda update --all
 ## install NLTK
 RUN  conda  install -y  nltk
 
 ## python 3.5 env
-RUN conda create -y -n py35 python=3.5 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk tensorflow opencv pillow
+RUN conda create -y -n py35 python=3.5 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk opencv pillow tensorflow
 
 ## python 2.7 env
-RUN conda create -y -n py27 python=2.7 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk tensorflow opencv pillow
+RUN conda create -y -n py27 python=2.7 numpy scipy pandas scikit-learn matplotlib seaborn jupyter nltk opencv pillow tensorflow
 
 # list envs
 RUN conda info -e
